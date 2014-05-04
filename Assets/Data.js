@@ -10,8 +10,8 @@ var pos2 : Vector2 = new Vector2(10, 80);
 var size2 : Vector2 = new Vector2(100, 20);
 var progressBarEmpty : Texture2D;
 var progressBarFull : Texture2D;
-private var branches : int;
-private var roots : int;
+private var branches : float;
+private var roots : float;
 public var branchCost : float;
 public var rootCost : float;
 
@@ -72,8 +72,8 @@ function Start () {
 function Update () {
 	branches = GameObject.Find("Branches").GetComponent(growTree).branches;
 	roots = GameObject.Find("RootContainer").GetComponent(growRoot).roots;
-	waterRate = (.001 * roots) / (10 * branches);
-	sugarRate = (.00006 * branches);
+	waterRate = (.001 * roots) - (.0005 * branches);
+	sugarRate = (.001 * (branches/5));
 	
 	water += waterRate;
 	sugar += sugarRate;
