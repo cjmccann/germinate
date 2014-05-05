@@ -70,6 +70,14 @@ function Start () {
 	timeSinceStart = 0.001;
 	gameOver = 2;
 	Time.timeScale = 1;
+	
+	fruitArray = gameObject.FindGameObjectsWithTag("Fruit");
+	
+	for (var fruit : GameObject in fruitArray) {
+		fruit.GetComponent(SpriteRenderer).sortingLayerName = "Background";
+		fruit.GetComponent(Transform).position.z = 0;
+	}
+	
 }
 
 function spawnTime(timeStamp : float) {
@@ -87,6 +95,7 @@ function germinate() {
 	
 	for (var fruit : GameObject in fruitArray) {
 		fruit.GetComponent(SpriteRenderer).sortingLayerName = "Foreground";
+		fruit.GetComponent(Transform).position.z = -1;
 	}
 	
 	Time.timeScale = 0;
@@ -118,7 +127,7 @@ function Update () {
 		if (dayTime) {
 			sugarRate = (.00045 * (Mathf.Pow((branches/5), .8)));
 		} else {
-			sugarRate = (.00045 * (Mathf.Pow((branches/5), .8))) * .5;
+			sugarRate = (.00045 * (Mathf.Pow((branches/5), .8))) * .65;
 		}
 
 		water += waterRate;
