@@ -6,7 +6,8 @@ public var reverseBranchPrefab : GameObject;
 public var consecRight : int;
 public var consecLeft  : int;
 public var branches : int;
-public var growCost = .15;
+public var growCost = .07;
+public var branchSound : AudioClip;
 
 private var data : Data;
 
@@ -28,7 +29,8 @@ private var timer = 0.0;
 
 function mkBranch() {
 	if (data.sugar >= growCost) {
-		data.sugar -= .15;
+		audio.PlayOneShot(branchSound);
+		data.sugar -= growCost;
 		var newBranch : GameObject;
 		var newVector : Vector2;
 		var rand = Random.Range(1, 3);
@@ -63,12 +65,14 @@ function mkBranch() {
 		branches++;
 		newBranch.transform.parent = transform;
 		newBranch.transform.position = newVector;
+		
+		if (!data.dayTime) {
+			newBranch.GetComponent(SpriteRenderer).color = Color.magenta;
+		}
 
 		transform.position = Vector2( transform.position.x, transform.position.y + .14);
-		timer = 0.0;
 		
 		if (branches % 5 == 0) {
-			print("zoom out");
 			Camera.main.orthographicSize += Camera.main.orthographicSize * .2;
 		}
 	}

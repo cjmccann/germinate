@@ -5,12 +5,15 @@ public var roots : int;
 public var rootArray : GameObject[];
 private var data : Data;
 private var index = 0;
-public var growCost = .1;
+public var growCost = .05;
+public var rootSound : AudioClip;
 
 function Start () {	
 	roots = 1;
 	data = GameObject.Find("Data").GetComponent(Data);
 	data.rootCost = growCost;
+	
+	audio.PlayOneShot(rootSound);
 
 	//var height = GetComponent(SpriteRenderer).bounds.max.y - GetComponent(SpriteRenderer).bounds.min.y;
 	//print("REAL" + height);
@@ -21,7 +24,7 @@ private var timer = 0.0;
 
 function mkRoot() {
 	if(data.water >= growCost) {
-		data.water -= .1;
+		data.water -= growCost;
 		var newRoot : GameObject;
 		var newVector : Vector2;
 		
@@ -32,6 +35,7 @@ function mkRoot() {
 				var rootSelection : rootClass = rootArray[rand].GetComponent(rootClass);
 				if (rootSelection.rootLeft && rootSelection.rootRight && rootSelection.rootCenter) { }
 				else {
+					audio.PlayOneShot(rootSound);
 					newRoot = Instantiate(rootPrefab);
 					while (true) {
 						var side = Random.Range(0, 3);
@@ -63,6 +67,7 @@ function mkRoot() {
 				}
 			}
 		} else {
+			audio.PlayOneShot(rootSound);
 			newRoot = Instantiate(rootPrefab);
 			newVector = Vector2(0.1011564, -1.219302);
 			roots++;
